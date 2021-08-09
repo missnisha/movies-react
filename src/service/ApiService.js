@@ -1,14 +1,30 @@
 import axios from "axios"
 const API_BASE_URL = 'https://api.themoviedb.org/3/movie';
 const API_KEY = '?api_key=e0c035f376fc2d0250266fa9b0999fd4';
-const NOW_PLAYING = '/now_playing'
-
+const NOW_PLAYING = '/now_playing';
+const MOVIE_DETAIL = '{movie_id}';
 
 function fetchCurrentMovies(page){
     return new Promise(async (resolve,reject) => { 
         try{
             console.log(`${API_BASE_URL}${NOW_PLAYING}${API_KEY}&language=en-US&page=${page}`)
             const response = await axios.get(`${API_BASE_URL}${NOW_PLAYING}${API_KEY}&language=en-US&page=${page}`)
+            resolve(response.data);
+            console.log(response.data)
+        } catch(err){
+            reject('Error fetching');
+        }
+
+    })
+
+    
+}
+
+function fetchMovieDetails(page){
+    return new Promise(async (resolve,reject) => { 
+        try{
+            console.log(`${API_BASE_URL}${MOVIE_DETAIL}${API_KEY}&language=en-US&page=${page}`)
+            const response = await axios.get(`${API_BASE_URL}${MOVIE_DETAIL}${API_KEY}&language=en-US&page=${page}`)
             resolve(response.data);
         } catch(err){
             reject('Error fetching');
@@ -19,7 +35,8 @@ function fetchCurrentMovies(page){
     
 }
 export {
-    fetchCurrentMovies
+    fetchCurrentMovies,
+    fetchMovieDetails
 
 }
 
